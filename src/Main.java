@@ -13,6 +13,7 @@ public class Main {
 
         String staffList = fileManagement.getStaff();
         System.out.println("\nStaff:\n" +staffList);
+        System.out.println("lol");
 
     }
 }
