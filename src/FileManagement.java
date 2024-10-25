@@ -1,15 +1,17 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
+import java.io.FileNotFoundException;
 
 public class FileManagement{
     private String filePath;
     public FileManagement(String filePath){
         this.filePath = filePath;
+        this.validateFile();
+        this.getProjects();
+        this.getStaff();
+
     }
     public boolean validateFile() {
-        // Prosta walidacja pliku
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             boolean projectsSection = false;
@@ -27,14 +29,14 @@ public class FileManagement{
                     continue;
                 }
 
-                // Walidacja linii projektu lub pracownika
+
                 if (projectsSection) {
                     if (!line.matches("P\\d+: (\\w+)( \\w+)*")) {
-                        return false; // Błędny format projektu
+                        return false;
                     }
                 } else if (staffSection) {
                     if (!line.matches("R\\d+: (\\w+)( \\w+)*")) {
-                        return false; // Błędny format pracownika
+                        return false;
                     }
                 }
             }
@@ -44,60 +46,64 @@ public class FileManagement{
         }
         return true;
     }
-    public List<Projects> getProjects() {
-        List<Projects> projects = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            boolean projectsSection = false;
+    public String getProjects() {
+        StringBuilder outputProjects = new StringBuilder();
+        String line;
+        File inputFile = new File(this.filePath);
+        try {
+            Scanner fileScanner = new Scanner(inputFile);
 
-            while ((line = br.readLine()) != null) {
-                line = line.trim();
-                if (line.equals("PROJECTS")) {
-                    projectsSection = true;
-                    continue;
-                } else if (line.equals("STAFF")) {
-                    projectsSection = false;
-                    continue;
-                }
 
-                if (projectsSection) {
-                    String[] parts = line.split(":");
-                    String projectName = parts[0].trim();
-                    String[] qualifications = parts[1].trim().split(" ");
-                    List<String> requiredQualifications = List.of(qualifications);
-                    String[] qualificationsArray = requiredQualifications.toArray(new String[0]);
-                    projects.add(new Projects(projectName, qualificationsArray));
+            while (fileScanner.hasNextLine()) {
+                line = fileScanner.nextLine().toUpperCase();
+                if (line.startsWith("P") && line.charAt(1) != 'R') {
+                    String projectName = line.substring(0, line.indexOf(":"));
+                    String[] projectDetails = line.split(": ")[1].split(" ");
+
+                    outputProjects.append("Project: ").append(projectName).append("\n");
+                    outputProjects.append("Details: ");
+                    for (String detail : projectDetails) {
+                        outputProjects.append(detail).append(" ");
+                    }
+                    outputProjects.append("\n\n");
+
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-        return projects;
+
+        catch(IOException e){
+                e.printStackTrace();
+            }
+
+        return outputProjects.toString();
     }
-    public List<Staff> getStaff() {
-        List<Staff> staffList = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            boolean staffSection = false;
+    public String getStaff(){
+        StringBuilder outputStaff = new StringBuilder();
+        String line;
+        File inputFile = new File(this.filePath);
 
-            while ((line = br.readLine()) != null) {
-                line = line.trim();
-                if (line.equals("STAFF")) {
-                    staffSection = true;
-                    continue;
-                }
+        try{
+            Scanner fileScanner = new Scanner(inputFile);
 
-                if (staffSection) {
-                    String[] parts = line.split(":");
-                    String staffName = parts[0].trim();
-                    String[] skillsArray = parts[1].trim().split(" ");
-                    List<String> staffSkills = List.of(skillsArray);
-                    staffList.add(new Staff(staffName, skillsArray));
+            while(fileScanner.hasNextLine()){
+                line = fileScanner.nextLine().toUpperCase();
+                if(line.startsWith("R")){
+                    String staffName = line.substring(0, line.indexOf(":"));
+                    String[] staffQualifications = line.split(": ")[1].split(" ");
+
+                    outputStaff.append("Employee: ").append(staffName).append("\n");
+                    outputStaff.append("Qualifications: ");
+                    for(String detail : staffQualifications){
+                        outputStaff.append(detail).append(" ");
+                    }
+                    outputStaff.append("\n\n");
                 }
             }
-        } catch (IOException e) {
+        }
+        catch(IOException e){
             e.printStackTrace();
         }
-        return staffList;
+
+        return outputStaff.toString();
     }
 }

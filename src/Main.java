@@ -1,18 +1,18 @@
 import java.util.*;
 
+//import java.io.FileNotFoundException;
+
 public class Main {
     public static void main(String[] args) {
-        String filePath = "path_to_your_file.txt"; // Uzupełnij rzeczywistą ścieżką
+        String filePath = "src/plik.txt";
+
         FileManagement fileManagement = new FileManagement(filePath);
 
-        if (fileManagement.validateFile()) {
-            List<Projects> projects = fileManagement.getProjects();
-            List<Staff> staff = fileManagement.getStaff();
+        String projects = fileManagement.getProjects();
+        System.out.println("Projects:\n" +projects);
 
-            Employment employment = new Employment(projects, staff);
-            employment.assignStaffToProjects();
-        } else {
-            System.out.println("Walidacja pliku nie powiodła się.");
-        }
+        String staffList = fileManagement.getStaff();
+        System.out.println("\nStaff:\n" +staffList);
+
     }
 }
