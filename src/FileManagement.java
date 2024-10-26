@@ -7,43 +7,19 @@ public class FileManagement{
     public FileManagement(String filePath){
         this.filePath = filePath;
     }
-    public boolean validateFile() {
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            boolean projectsSection = false;
-            boolean staffSection = false;
+    private void validateFile() {
 
-            while ((line = br.readLine()) != null) {
-                line = line.trim();
+        File inputFile = new File(this.filePath);
+        try{
+            Scanner fileScanner = new Scanner(inputFile);
+            String readLine;
+            List<String> parsedLine = new ArrayList<>();
 
-                if (line.equals("PROJECTS")) {
-                    projectsSection = true;
-                    staffSection = false;
-                    continue;
-                } else if (line.equals("STAFF")) {
-                    staffSection = true;
-                    projectsSection = false;
-                    continue;
-                }
-
-
-                if (projectsSection) {
-                    if (!line.matches("P\\d+:\\s+([a-zA-Z]+\\s*)+")) {
-                        return false;
-                    }
-                } else if (staffSection) {
-                    if (!line.matches("R\\d+:\\s+([a-zA-Z]+\\s*)+")) {
-                        return false;
-                    }
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
+        } catch(FileNotFoundException e){
+            System.out.println("Cannot open input file at path " + this.filePath);
         }
-        return true;
     }
-    public ArrayList<Projects> getProjects(){
+    public ArrayList<Projects> getProjects() throws FileNotFoundException{
 
         ArrayList<Projects> outputProjects = new ArrayList<>();
         String line;
@@ -65,13 +41,13 @@ public class FileManagement{
             }
         }
 
-        catch(IOException e){
+        catch(FileNotFoundException e){
                 e.printStackTrace();
             }
 
         return outputProjects;
     }
-    public ArrayList<Staff> getStaff(){
+    public ArrayList<Staff> getStaff() throws FileNotFoundException{
 
         ArrayList<Staff> outputStaff = new ArrayList<>();
         String line;
@@ -91,7 +67,7 @@ public class FileManagement{
                 }
             }
         }
-        catch(IOException e){
+        catch(FileNotFoundException e){
             e.printStackTrace();
         }
 

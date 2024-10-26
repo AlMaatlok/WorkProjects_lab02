@@ -1,28 +1,35 @@
+import java.io.FileNotFoundException;
 import java.util.*;
 
 
 public class Main {
-    public static void main(String[] args) {
-        String filePath = "src/plik.txt";
+    public static void main(String[] args) throws FileNotFoundException {
+        //String filePath = "C:\\Users\\HP\\IdeaProjects\\WorkProjects_lab02\\src\\plik.txt";
 
-        FileManagement fileManagement = new FileManagement(filePath);
+        if (args.length >= 2) {
+            System.out.println("Too many arguments");
+            System.exit(-1);
+        }
+
+        if (args[0].equals("-h")) {
+            System.out.println("Usage: java -jar main.jar <Project and staff .txt file>");
+            System.exit(0);
+        }
+
+        try {
+            FileManagement Fm = new FileManagement(args[0]);
+                ArrayList<Staff> staff = Fm.getStaff();
+                ArrayList<Projects> projects = Fm.getProjects();
+
+                ArrayList<Employment> employments = new ArrayList<>();
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("Wrong arguments use -h if you need help");
+        }
+
+        //FileManagement fileManagement = new FileManagement(filePath);
         //ArrayList<Projects> projects = fileManagement.getProjects();
         //ArrayList<Staff> staff = fileManagement.getStaff();
-
-        if (fileManagement.validateFile()) {
-            ArrayList<Projects> projects = fileManagement.getProjects();
-            ArrayList<Staff> staff = fileManagement.getStaff();
-
-            Employment manager = new Employment(projects, staff);
-
-            manager.EmployeeToProject();
-
-            manager.output();
-        } else {
-            System.out.println("Plik z danymi jest niepoprawny.");
-        }
-    }
-
         /*for (Projects project : projects) {
             System.out.println("Projekt: " + project.getName());
             System.out.println("Potrzebne kwalifikacje: ");
@@ -37,4 +44,5 @@ public class Main {
             String qualifications = String.join(" ", employee.getQualifications().keySet());
             System.out.println("Employee: " + employee.getName() + " Qualifications: " + qualifications);
         }*/
+    }
 }
