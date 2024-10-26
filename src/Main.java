@@ -21,28 +21,12 @@ public class Main {
                 ArrayList<Staff> staff = Fm.getStaff();
                 ArrayList<Projects> projects = Fm.getProjects();
 
-                ArrayList<Employment> employments = new ArrayList<>();
+                Employment employment = new Employment(projects, staff);
+                employment.EmployeeToProject();
+                employment.output();
         }
         catch (FileNotFoundException e) {
             System.out.println("Wrong arguments use -h if you need help");
         }
-
-        //FileManagement fileManagement = new FileManagement(filePath);
-        //ArrayList<Projects> projects = fileManagement.getProjects();
-        //ArrayList<Staff> staff = fileManagement.getStaff();
-        /*for (Projects project : projects) {
-            System.out.println("Projekt: " + project.getName());
-            System.out.println("Potrzebne kwalifikacje: ");
-            for (String qualification : project.getRequiredQualifications()) {
-                System.out.print(qualification + " ");
-            }
-            System.out.println("");
-        }
-        ArrayList<Staff> staffList = fileManagement.getStaff();
-
-        for (Staff employee : staffList) {
-            String qualifications = String.join(" ", employee.getQualifications().keySet());
-            System.out.println("Employee: " + employee.getName() + " Qualifications: " + qualifications);
-        }*/
     }
 }

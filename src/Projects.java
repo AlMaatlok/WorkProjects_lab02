@@ -40,6 +40,4 @@ public class Projects {
    public ArrayList<String> getOccupiedPositions(){
        return occupiedPositions;
    }
-
-
 }

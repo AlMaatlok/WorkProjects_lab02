@@ -70,7 +70,6 @@ public class FileManagement{
         catch(FileNotFoundException e){
             e.printStackTrace();
         }
-
         return outputStaff;
     }
 }
