@@ -1,33 +1,51 @@
-import java.util.List;
+import java.util.*;
 
 public class Employment {
-    private List<Projects> projects;
-    private List<Staff> staff;
+    private ArrayList<Projects> projects;
+    private ArrayList<Staff> employees;
 
-    public Employment(List<Projects> projects, List<Staff> staff) {
+    public Employment(ArrayList<Projects> projects, ArrayList<Staff> employees) {
         this.projects = projects;
-        this.staff = staff;
+        this.employees = employees;
     }
 
-    public void assignStaffToProjects() {
+    public void EmployeeToProject() {
         for (Projects project : projects) {
-            for (String requiredQualification : project.getRequiredQualifications()) {
-                for (Staff employee : staff) {
+            for (String required : project.getRequiredQualifications()) {
+                boolean positionOccupied = false;
 
-                    if (employee.getQualifications().containsKey(requiredQualification) &&
-                            employee.getQualifications().get(requiredQualification) > 0) {
+                for (Staff employee : employees) {
+                    if (employee.getOpenQualifications().contains(required)) {
+                        if (project.occupyPosition(required, employee.getName())) {
+                            if (employee.hire(required)) {
+                                positionOccupied = true;
+                                break;
+                            }
+                        }
+                    }
+                }
 
-
-                        if (project.occupyPosition(requiredQualification, employee.getName())) {
-
-                            employee.hire(requiredQualification);
-                            System.out.println(employee.getName() + " przypisany do projektu " + project.getName() + " z kwalifikacją " + requiredQualification);
-
-                            break;
+                if (!positionOccupied) {
+                    for (Staff employee : employees) {
+                        if (Staff.isSpecialQualification(required) && employee.getOpenQualifications().contains(required)) {
+                            if (project.occupyPosition(required, employee.getName())) {
+                                if (employee.hire(required)) {
+                                    break;
+                                }
+                            }
                         }
                     }
                 }
             }
+        }
+    }
+
+    public void output() {
+        for (Projects project : projects) {
+            System.out.println("Projekt: " + project.getName());
+            System.out.println("Obsadzone stanowiska: " + project.getOccupiedPositions());
+            System.out.println("Liczba wolnych miejsc: " + project.getVacantCount());
+            System.out.println();
         }
     }
 }

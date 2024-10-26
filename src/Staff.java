@@ -59,5 +59,4 @@ public class Staff {
     public Map<String, Integer> getQualifications(){
         return this.qualifications;
     }
-
 }

@@ -1,9 +1,9 @@
 import java.util.*;
 public class Projects {
    private String name;
-   private List<String> requiredQualifications = new ArrayList<>();
+   private ArrayList<String> requiredQualifications = new ArrayList<>();
 
-   private List<String> occupiedPositions = new ArrayList<>();
+   private ArrayList<String> occupiedPositions = new ArrayList<>();
 
    public Projects(String name, String[] qualifications){
        this.name = name;
@@ -34,10 +34,10 @@ public class Projects {
    public String getName(){
        return name;
    }
-   public List<String> getRequiredQualifications(){
+   public ArrayList<String> getRequiredQualifications(){
        return requiredQualifications;
    }
-   public List<String> getOccupiedPositions(){
+   public ArrayList<String> getOccupiedPositions(){
        return occupiedPositions;
    }
 

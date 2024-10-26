@@ -6,10 +6,6 @@ public class FileManagement{
     private String filePath;
     public FileManagement(String filePath){
         this.filePath = filePath;
-        this.validateFile();
-        this.getProjects();
-        this.getStaff();
-
     }
     public boolean validateFile() {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -19,6 +15,7 @@ public class FileManagement{
 
             while ((line = br.readLine()) != null) {
                 line = line.trim();
+
                 if (line.equals("PROJECTS")) {
                     projectsSection = true;
                     staffSection = false;
@@ -31,11 +28,11 @@ public class FileManagement{
 
 
                 if (projectsSection) {
-                    if (!line.matches("P\\d+: (\\w+)( \\w+)*")) {
+                    if (!line.matches("P\\d+:\\s+([a-zA-Z]+\\s*)+")) {
                         return false;
                     }
                 } else if (staffSection) {
-                    if (!line.matches("R\\d+: (\\w+)( \\w+)*")) {
+                    if (!line.matches("R\\d+:\\s+([a-zA-Z]+\\s*)+")) {
                         return false;
                     }
                 }
@@ -46,10 +43,12 @@ public class FileManagement{
         }
         return true;
     }
-    public String getProjects() {
-        StringBuilder outputProjects = new StringBuilder();
+    public ArrayList<Projects> getProjects(){
+
+        ArrayList<Projects> outputProjects = new ArrayList<>();
         String line;
         File inputFile = new File(this.filePath);
+
         try {
             Scanner fileScanner = new Scanner(inputFile);
 
@@ -60,13 +59,8 @@ public class FileManagement{
                     String projectName = line.substring(0, line.indexOf(":"));
                     String[] projectDetails = line.split(": ")[1].split(" ");
 
-                    outputProjects.append("Project: ").append(projectName).append("\n");
-                    outputProjects.append("Details: ");
-                    for (String detail : projectDetails) {
-                        outputProjects.append(detail).append(" ");
-                    }
-                    outputProjects.append("\n\n");
-
+                    Projects newProject = new Projects(projectName, projectDetails);
+                    outputProjects.add(newProject);
                 }
             }
         }
@@ -75,10 +69,11 @@ public class FileManagement{
                 e.printStackTrace();
             }
 
-        return outputProjects.toString();
+        return outputProjects;
     }
-    public String getStaff(){
-        StringBuilder outputStaff = new StringBuilder();
+    public ArrayList<Staff> getStaff(){
+
+        ArrayList<Staff> outputStaff = new ArrayList<>();
         String line;
         File inputFile = new File(this.filePath);
 
@@ -91,12 +86,8 @@ public class FileManagement{
                     String staffName = line.substring(0, line.indexOf(":"));
                     String[] staffQualifications = line.split(": ")[1].split(" ");
 
-                    outputStaff.append("Employee: ").append(staffName).append("\n");
-                    outputStaff.append("Qualifications: ");
-                    for(String detail : staffQualifications){
-                        outputStaff.append(detail).append(" ");
-                    }
-                    outputStaff.append("\n\n");
+                    Staff newStaff = new Staff(staffName, staffQualifications);
+                    outputStaff.add(newStaff);
                 }
             }
         }
@@ -104,6 +95,6 @@ public class FileManagement{
             e.printStackTrace();
         }
 
-        return outputStaff.toString();
+        return outputStaff;
     }
 }
