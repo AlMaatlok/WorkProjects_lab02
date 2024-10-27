@@ -2,50 +2,38 @@ import java.util.*;
 
 public class Employment {
     private ArrayList<Projects> projects;
-    private ArrayList<Staff> employees;
+    private ArrayList<Staff> staffList;
 
-    public Employment(ArrayList<Projects> projects, ArrayList<Staff> employees) {
+    // Constructor to initialize projects and staff lists
+    public Employment(ArrayList<Projects> projects, ArrayList<Staff> staffList) {
         this.projects = projects;
-        this.employees = employees;
+        this.staffList = staffList;
     }
 
-    public void EmployeeToProject() {
+    // Method to assign staff to projects based on qualifications
+    public void assignStaffToProjects() {
         for (Projects project : projects) {
-            for (String required : project.getRequiredQualifications()) {
-                boolean positionOccupied = false;
-
-                for (Staff employee : employees) {
-                    if (employee.getOpenQualifications().contains(required)) {
-                        if (project.occupyPosition(required, employee.getName())) {
-                            if (employee.hire(required)) {
-                                positionOccupied = true;
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                if (!positionOccupied) {
-                    for (Staff employee : employees) {
-                        if (Staff.isSpecialQualification(required) && employee.getOpenQualifications().contains(required)) {
-                            if (project.occupyPosition(required, employee.getName())) {
-                                if (employee.hire(required)) {
-                                    break;
-                                }
-                            }
+            for (Staff staff : staffList) {
+                for (String qualification : staff.getOpenQualifications()) {
+                    if (project.isQualificationRequired(qualification)) {
+                        if (project.occupyPosition(qualification, staff.getName())) {
+                            staff.hire(qualification);
                         }
                     }
                 }
             }
         }
     }
-
     public void output() {
         for (Projects project : projects) {
-            System.out.println("Projekt: " + project.getName());
-            System.out.println("Obsadzone stanowiska: " + project.getOccupiedPositions());
-            System.out.println("Liczba wolnych miejsc: " + project.getVacantCount());
-            System.out.println();
+            System.out.println("Project: " + project.getName());
+            if (project.getOccupiedPositions().isEmpty()) {
+                System.out.println("  No staff assigned yet.");
+            } else {
+                for (Map.Entry<String, String> entry : project.getOccupiedPositions().entrySet()) {
+                    System.out.println("  - Position: " + entry.getKey() + ", Employee: " + entry.getValue());
+                }
+            }
         }
     }
 }

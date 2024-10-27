@@ -22,7 +22,7 @@ public class Main {
                 ArrayList<Projects> projects = Fm.getProjects();
 
                 Employment employment = new Employment(projects, staff);
-                employment.EmployeeToProject();
+                employment.assignStaffToProjects();
                 employment.output();
         }
         catch (FileNotFoundException e) {
