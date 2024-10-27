@@ -20,17 +20,15 @@ public class Staff {
 
     public boolean hire(String Q){
         boolean isSpecial = isSpecialQualification(Q);
-        // Umożliwienie zatrudnienia na podstawie kwalifikacji
-        if (isSpecial) {
-            if (NumOfAssignedProjects < 2) {
-                NumOfAssignedProjects++;
-                return true;
-            }
-        } else {  // Dla pozostałych kwalifikacji
-            if (NumOfAssignedProjects == 0) {
-                NumOfAssignedProjects++;
-                return true;
-            }
+
+        if (isSpecial && NumOfAssignedProjects < 2) {
+            NumOfAssignedProjects++;
+            return true;
+        }
+
+        else if (!isSpecial && NumOfAssignedProjects == 0) {
+            NumOfAssignedProjects++;
+            return true;
         }
         return false;
     }
@@ -44,11 +42,7 @@ public class Staff {
     }
 
     public ArrayList<String> getOpenQualifications(){
-        ArrayList<String> output = new ArrayList<>();
-        for(String qualification : this.qualifications){
-                output.add(qualification);
-        }
-        return output;
+        return new ArrayList<>(qualifications);
     }
 
     /*public void leaveWork(String qualification){
@@ -60,5 +54,9 @@ public class Staff {
     }
     public ArrayList<String> getQualifications(){
         return this.qualifications;
+    }
+
+    public int getNumOfAssignedProjects() {
+        return NumOfAssignedProjects;
     }
 }

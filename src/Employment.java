@@ -4,13 +4,11 @@ public class Employment {
     private ArrayList<Projects> projects;
     private ArrayList<Staff> staffList;
 
-    // Constructor to initialize projects and staff lists
     public Employment(ArrayList<Projects> projects, ArrayList<Staff> staffList) {
         this.projects = projects;
         this.staffList = staffList;
     }
 
-    // Method to assign staff to projects based on qualifications
     public void assignStaffToProjects() {
         for (Projects project : projects) {
             for (Staff staff : staffList) {
