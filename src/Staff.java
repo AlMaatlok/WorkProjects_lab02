@@ -4,6 +4,8 @@ public class Staff {
     private ArrayList<String> qualifications;
     private String name;
     private int NumOfAssignedProjects;
+    private String assignedProjects;
+    private String projectThatStaffWorksOn;
     public static enum SpecialQualifications{
         QM, PM
     }
@@ -18,16 +20,16 @@ public class Staff {
         NumOfAssignedProjects = 0;
     }
 
-    public boolean hire(String Q){
+    public boolean hire(String Q, Staff staff){
         boolean isSpecial = isSpecialQualification(Q);
 
-        if (isSpecial && NumOfAssignedProjects < 2) {
-            NumOfAssignedProjects++;
+        if (isSpecial && staff.getNumOfAssignedProjects() < 2) {
+            staff.setNumOfAssignedProjects(staff.getNumOfAssignedProjects()+1);
             return true;
         }
 
-        else if (!isSpecial && NumOfAssignedProjects == 0) {
-            NumOfAssignedProjects++;
+        else if (!isSpecial && staff.getNumOfAssignedProjects() == 0) {
+            staff.setNumOfAssignedProjects(staff.getNumOfAssignedProjects()+1);
             return true;
         }
         return false;
@@ -40,15 +42,12 @@ public class Staff {
         }
         return false;
     }
-
+    public void setNumOfAssignedProjects(int numOfAssignedProjects){
+        NumOfAssignedProjects = numOfAssignedProjects;
+    }
     public ArrayList<String> getOpenQualifications(){
         return new ArrayList<>(qualifications);
     }
-
-    /*public void leaveWork(String qualification){
-        this.qualifications.put(qualification, this.qualifications.get(qualification ) + 1);
-    }
-*/
     public String getName(){
         return this.name;
     }

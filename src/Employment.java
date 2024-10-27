@@ -9,14 +9,13 @@ public class Employment {
         this.staffList = staffList;
     }
 
+    ArrayList<Projects> newArranegmnetOfProject = new ArrayList<>();
     public void assignStaffToProjects() {
         for (Projects project : projects) {
             for (Staff staff : staffList) {
                 for (String qualification : staff.getOpenQualifications()) {
                     if (project.isQualificationRequired(qualification)) {
-                        if (project.occupyPosition(qualification, staff.getName())) {
-                            staff.hire(qualification);
-                        }
+                         project.occupyPosition(qualification, staff);
                     }
                 }
             }
@@ -28,7 +27,7 @@ public class Employment {
             if (project.getOccupiedPositions().isEmpty()) {
                 System.out.println("  No staff assigned yet.");
             } else {
-                for (Map.Entry<String, String> entry : project.getOccupiedPositions().entrySet()) {
+                for (Map.Entry<String, ArrayList> entry : project.getOccupiedPositions().entrySet()) {
                     System.out.println("  - Position: " + entry.getKey() + ", Employee: " + entry.getValue());
                 }
             }

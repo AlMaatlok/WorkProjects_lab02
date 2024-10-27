@@ -18,12 +18,12 @@ public class Main {
 
         try {
             FileManagement Fm = new FileManagement(args[0]);
-                ArrayList<Staff> staff = Fm.getStaff();
-                ArrayList<Projects> projects = Fm.getProjects();
+            ArrayList<Staff> staff = Fm.getStaff();
+            ArrayList<Projects> projects = Fm.getProjects();
+            Employment employment = new Employment(projects, staff);
 
-                Employment employment = new Employment(projects, staff);
-                employment.assignStaffToProjects();
-                employment.output();
+            employment.assignStaffToProjects();
+            employment.output();
         }
         catch (FileNotFoundException e) {
             System.out.println("Wrong arguments use -h if you need help");
