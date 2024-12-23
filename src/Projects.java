@@ -30,12 +30,12 @@ public class Projects {
    public int getOccupiedCount(){
        return occupiedPositions.size();
    }
-   public int getVacantCount(){
+   /*public int getVacantCount(){
        return requiredQualifications.size()-getOccupiedCount();
-   }
-   public float getOccupancyPercantage(){
+   }*/
+   /*public float getOccupancyPercantage(){
        return (float) getOccupiedCount() /requiredQualifications.size();
-   }
+   }*/
    public String getName(){
        return name;
    }

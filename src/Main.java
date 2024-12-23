@@ -24,6 +24,7 @@ public class Main {
 
             employment.assignStaffToProjects();
             employment.output();
+
         }
         catch (FileNotFoundException e) {
             System.out.println("Wrong arguments use -h if you need help");

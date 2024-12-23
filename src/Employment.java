@@ -8,8 +8,6 @@ public class Employment {
         this.projects = projects;
         this.staffList = staffList;
     }
-
-    ArrayList<Projects> newArranegmnetOfProject = new ArrayList<>();
     public void assignStaffToProjects() {
         for (Projects project : projects) {
             for (Staff staff : staffList) {
