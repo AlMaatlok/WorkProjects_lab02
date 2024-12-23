@@ -1,19 +1,21 @@
+package Models;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-class Projects {
+public class Project {
     private String name;
     private ArrayList<String> requiredQualifications = new ArrayList<>();
     private Map<String, ArrayList<String>> occupiedPositions = new HashMap<>();
 
-    public Projects(String name, String[] qualifications) {
+    public Project(String name, String[] qualifications) {
         this.name = name;
         requiredQualifications.addAll(Arrays.asList(qualifications));
     }
 
-    public void occupyPosition(String qualification, Staff staff) {
+    public void occupyPosition(String qualification, Employee staff) {
         if (isQualificationRequired(qualification) && staff.hire(qualification)) {
             occupiedPositions.computeIfAbsent(qualification, k -> new ArrayList<>()).add(staff.getName());
             requiredQualifications.remove(qualification);

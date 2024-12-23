@@ -1,18 +1,20 @@
+package Models;
+
 import java.util.ArrayList;
 import java.util.Map;
 
-class Employment {
-    private ArrayList<Projects> projects;
-    private ArrayList<Staff> staffList;
+public class Assignment {
+    private ArrayList<Project> projects;
+    private ArrayList<Employee> staffList;
 
-    public Employment(ArrayList<Projects> projects, ArrayList<Staff> staffList) {
+    public Assignment(ArrayList<Project> projects, ArrayList<Employee> staffList) {
         this.projects = projects;
         this.staffList = staffList;
     }
 
     public void assignStaffToProjects() {
-        for (Projects project : projects) {
-            for (Staff staff : staffList) {
+        for (Project project : projects) {
+            for (Employee staff : staffList) {
                 for (String qualification : staff.getOpenQualifications()) {
                     if (project.isQualificationRequired(qualification)) {
                         project.occupyPosition(qualification, staff);
@@ -24,7 +26,7 @@ class Employment {
 
     public int calculateEfficiency() {
         int score = 0;
-        for (Projects project : projects) {
+        for (Project project : projects) {
             score += project.getOccupiedCount();
             score -= project.getRequiredQualifications().size(); // Kary za wakaty
         }
@@ -32,8 +34,8 @@ class Employment {
     }
 
     public void output() {
-        for (Projects project : projects) {
-            System.out.println("Project: " + project.getName());
+        for (Project project : projects) {
+            System.out.println("Models.Project: " + project.getName());
             if (project.getOccupiedPositions().isEmpty()) {
                 System.out.println("  No staff assigned yet.");
             } else {

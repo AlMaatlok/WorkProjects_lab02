@@ -1,3 +1,9 @@
+import Logic.AssignmentOptimizer;
+import Logic.FileParser;
+import Models.Assignment;
+import Models.Employee;
+import Models.Project;
+
 import java.io.FileNotFoundException;
 import java.util.*;
 
@@ -12,18 +18,20 @@ public class Main {
         }
 
         if (args[0].equals("-h")) {
-            System.out.println("Usage: java -jar main.jar <Project and staff .txt file>");
+            System.out.println("Usage: java -jar main.jar <Models.Project and staff .txt file>");
             System.exit(0);
         }
 
         try {
-            FileManagement Fm = new FileManagement(args[0]);
-            ArrayList<Staff> staff = Fm.getStaff();
-            ArrayList<Projects> projects = Fm.getProjects();
-            Employment employment = new Employment(projects, staff);
+            FileParser fm = new FileParser(args[0]);
+            ArrayList<Employee> staff = fm.getStaff();
+            ArrayList<Project> projects = fm.getProjects();
 
-            employment.assignStaffToProjects();
-            employment.output();
+            System.out.println("Optimizing staff assignment to projects...");
+            Assignment bestEmployment = AssignmentOptimizer.optimizeAssignment(projects, staff);
+
+            System.out.println("\nBest assignment:");
+            bestEmployment.output();
 
         }
         catch (FileNotFoundException e) {

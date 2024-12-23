@@ -1,7 +1,9 @@
+package Models;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
-class Staff {
+public class Employee {
     private ArrayList<String> qualifications;
     private String name;
     private int numOfAssignedProjects;
@@ -10,7 +12,7 @@ class Staff {
         QA, PM
     }
 
-    public Staff(String name, String[] givenQualifications) {
+    public Employee(String name, String[] givenQualifications) {
         this.name = name;
         this.qualifications = new ArrayList<>(Arrays.asList(givenQualifications));
         this.numOfAssignedProjects = 0;
