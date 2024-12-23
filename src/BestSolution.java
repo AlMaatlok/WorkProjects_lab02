@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.Collections;
-
+import java.util.*;
 
 public class BestSolution {
     public static Employment generateNewArrangement(ArrayList<Projects> projects, ArrayList<Staff> staffList) {
@@ -26,9 +24,23 @@ public class BestSolution {
 
         Employment newEmployment = new Employment(newProjectArrangement, newStaffArrangement);
         newEmployment.assignStaffToProjects();
-        newEmployment.output();
-
         return newEmployment;
     }
 
+    public static Employment optimizeAssignment(ArrayList<Projects> projects, ArrayList<Staff> staffList) {
+        Employment bestSolution = generateNewArrangement(projects, staffList);
+        int bestScore = bestSolution.calculateEfficiency();
+
+        for (int i = 0; i < 1000; i++) {
+            Employment newSolution = generateNewArrangement(projects, staffList);
+            int newScore = newSolution.calculateEfficiency();
+
+            if (newScore > bestScore) {
+                bestSolution = newSolution;
+                bestScore = newScore;
+            }
+        }
+
+        return bestSolution;
+    }
 }

@@ -1,61 +1,52 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
-public class Staff {
+class Staff {
     private ArrayList<String> qualifications;
     private String name;
-    private int NumOfAssignedProjects;
-    private String assignedProjects;
-    private String projectThatStaffWorksOn;
-    public static enum SpecialQualifications{
-        QM, PM
+    private int numOfAssignedProjects;
+
+    private enum SpecialQualifications {
+        QA, PM
     }
 
-    public Staff(String name, String[] givenQualifications){
+    public Staff(String name, String[] givenQualifications) {
         this.name = name;
-        this.qualifications = new ArrayList<>();
-
-        for(String qualification : givenQualifications)
-            qualifications.add(qualification);
-
-        NumOfAssignedProjects = 0;
+        this.qualifications = new ArrayList<>(Arrays.asList(givenQualifications));
+        this.numOfAssignedProjects = 0;
     }
 
-    public boolean hire(String Q, Staff staff){
-        boolean isSpecial = isSpecialQualification(Q);
+    public boolean hire(String qualification) {
+        boolean isSpecial = isSpecialQualification(qualification);
 
-        if (isSpecial && staff.getNumOfAssignedProjects() < 2) {
-            staff.setNumOfAssignedProjects(staff.getNumOfAssignedProjects()+1);
+        if (isSpecial && numOfAssignedProjects < 2) {
+            numOfAssignedProjects++;
+            return true;
+        } else if (!isSpecial && numOfAssignedProjects == 0) {
+            numOfAssignedProjects++;
             return true;
         }
 
-        else if (!isSpecial && staff.getNumOfAssignedProjects() == 0) {
-            staff.setNumOfAssignedProjects(staff.getNumOfAssignedProjects()+1);
-            return true;
-        }
         return false;
     }
 
-    public static boolean isSpecialQualification(String name){
-        for(SpecialQualifications  q : SpecialQualifications.values()){
-            if(name.equals(q.name()))
+    private static boolean isSpecialQualification(String qualification) {
+        for (SpecialQualifications q : SpecialQualifications.values()) {
+            if (q.name().equals(qualification)) {
                 return true;
+            }
         }
         return false;
     }
-    public void setNumOfAssignedProjects(int numOfAssignedProjects){
-        NumOfAssignedProjects = numOfAssignedProjects;
+
+    public String getName() {
+        return name;
     }
-    public ArrayList<String> getOpenQualifications(){
+
+    public ArrayList<String> getOpenQualifications() {
         return new ArrayList<>(qualifications);
-    }
-    public String getName(){
-        return this.name;
     }
     public ArrayList<String> getQualifications(){
         return this.qualifications;
-    }
-
-    public int getNumOfAssignedProjects() {
-        return NumOfAssignedProjects;
     }
 }
