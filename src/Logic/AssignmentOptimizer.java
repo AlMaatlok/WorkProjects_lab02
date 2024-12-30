@@ -40,14 +40,25 @@ public class AssignmentOptimizer {
         Assignment bestSolution = generateNewArrangement(projects, staffList);
         int bestScore = bestSolution.calculateEfficiency();
 
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 2000; i++) {
             Assignment newSolution = generateNewArrangement(projects, staffList);
             int newScore = newSolution.calculateEfficiency();
+            int id = i + 1;
 
-            if (newScore > bestScore) {
+            System.out.println("Solution number " + id);
+            System.out.println("Score: " + newScore);
+            newSolution.output();
+
+            int noChangeInBestScore = 0;
+            if(newScore < bestScore){
+                noChangeInBestScore++;
+            }
+            else if (newScore > bestScore) {
                 bestSolution = newSolution;
                 bestScore = newScore;
+                noChangeInBestScore = 0;
             }
+            if(noChangeInBestScore == 5) break;
         }
 
         return bestSolution;

@@ -20,8 +20,9 @@ public class Employee {
 
     public boolean hire(String qualification) {
         boolean isSpecial = isSpecialQualification(qualification);
+        int numOfQualifications = qualifications.size();
 
-        if (isSpecial && numOfAssignedProjects < 2) {
+        if (numOfQualifications == 1 && isSpecial && numOfAssignedProjects < 2) {
             numOfAssignedProjects++;
             return true;
         } else if (!isSpecial && numOfAssignedProjects == 0) {

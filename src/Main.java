@@ -10,7 +10,6 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
-        //String filePath = "C:\\Users\\HP\\IdeaProjects\\WorkProjects_lab02\\src\\plik.txt";
 
         if (args.length >= 2) {
             System.out.println("Too many arguments");
@@ -18,12 +17,13 @@ public class Main {
         }
 
         if (args[0].equals("-h")) {
-            System.out.println("Usage: java -jar main.jar <Models.Project and staff .txt file>");
+            System.out.println("Usage: java -jar main.jar <Project and staff .txt file>");
             System.exit(0);
         }
 
         try {
             FileParser fm = new FileParser(args[0]);
+
             ArrayList<Employee> staff = fm.getStaff();
             ArrayList<Project> projects = fm.getProjects();
 

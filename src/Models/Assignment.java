@@ -25,24 +25,35 @@ public class Assignment {
     }
 
     public int calculateEfficiency() {
-        int score = 0;
+        int score = 1000;
         for (Project project : projects) {
-            score += project.getOccupiedCount();
-            score -= project.getRequiredQualifications().size(); // Kary za wakaty
+            int occupiedPositions = project.getOccupiedCount();
+            int missingPositions = project.getRequiredQualifications().size();
+            int all = occupiedPositions + missingPositions;
+
+            if(missingPositions == 0) score += 50;
+
+            score += 7 * (occupiedPositions / all);
+            score -= 20 * (missingPositions / all);
+
         }
         return score;
     }
 
     public void output() {
+
         for (Project project : projects) {
-            System.out.println("Models.Project: " + project.getName());
+            System.out.println("Project: " + project.getName());
             if (project.getOccupiedPositions().isEmpty()) {
-                System.out.println("  No staff assigned yet.");
+                System.out.println("No staff assigned yet.");
             } else {
                 for (Map.Entry<String, ArrayList<String>> entry : project.getOccupiedPositions().entrySet()) {
                     System.out.println("  - Position: " + entry.getKey() + ", Employees: " + entry.getValue());
                 }
             }
         }
+        System.out.println("=========================================================");
+        System.out.println();
+        System.out.println("=========================================================");
     }
 }

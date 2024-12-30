@@ -14,6 +14,17 @@ public class FileParser {
     public FileParser(String filePath) {
         this.filePath = filePath;
     }
+    public int checkLines() throws FileNotFoundException {
+        File inputFile = new File(this.filePath);
+        Scanner fileScanner = new Scanner(inputFile);
+
+        int numberOfLines = 0;
+
+        while (fileScanner.hasNextLine()) {
+            numberOfLines++;
+        }
+        return numberOfLines;
+    }
 
     public ArrayList<Project> getProjects() throws FileNotFoundException {
         ArrayList<Project> outputProjects = new ArrayList<>();
