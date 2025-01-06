@@ -17,10 +17,8 @@ public class Project {
     }
 
     public void occupyPosition(String qualification, Employee staff) {
-        // Sprawdzamy, czy kwalifikacja jest wymagana i czy pracownik może zostać zatrudniony na danej roli
         if (isQualificationRequired(qualification) && staff.hire(qualification)) {
             occupiedPositions.computeIfAbsent(qualification, k -> new ArrayList<>()).add(staff.getName());
-            // Usuwamy wymaganą kwalifikację z listy, gdy jest przypisana do projektu
             requiredQualifications.remove(qualification);
         }
     }
@@ -30,7 +28,7 @@ public class Project {
     }
 
     public int getOccupiedCount() {
-        return occupiedPositions.values().stream().mapToInt(ArrayList::size).sum(); // Liczymy całkowitą liczbę przypisanych pracowników
+        return occupiedPositions.values().stream().mapToInt(ArrayList::size).sum();
     }
 
     public String getName() {
@@ -38,14 +36,13 @@ public class Project {
     }
 
     public ArrayList<String> getRequiredQualifications() {
-        return new ArrayList<>(requiredQualifications); // Zwracamy kopię listy
+        return new ArrayList<>(requiredQualifications);
     }
 
     public Map<String, ArrayList<String>> getOccupiedPositions() {
-        return new HashMap<>(occupiedPositions); // Zwracamy kopię mapy
+        return new HashMap<>(occupiedPositions);
     }
 
-    // Opcjonalna metoda do zwolnienia pracownika z pozycji w projekcie
     public void releasePosition(String qualification, Employee staff) {
         if (occupiedPositions.containsKey(qualification)) {
             ArrayList<String> staffList = occupiedPositions.get(qualification);
@@ -53,17 +50,14 @@ public class Project {
             if (staffList.isEmpty()) {
                 occupiedPositions.remove(qualification);
             }
-            // Ponownie dodajemy kwalifikację do listy wymaganych
             requiredQualifications.add(qualification);
         }
     }
 
-    // Sprawdzamy, czy dany pracownik jest przypisany do projektu na tej roli
     public boolean isEmployeeAssignedToPosition(String qualification, Employee staff) {
         return occupiedPositions.containsKey(qualification) && occupiedPositions.get(qualification).contains(staff.getName());
     }
 
-    // Nowa funkcja: sprawdza, czy pozycja jest już zajęta
     public boolean isPositionOccupied(String qualification) {
         return occupiedPositions.containsKey(qualification) && !occupiedPositions.get(qualification).isEmpty();
     }

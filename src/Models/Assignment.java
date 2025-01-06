@@ -37,8 +37,8 @@ public class Assignment {
             score += 7 * (occupiedPositions / all);
             score -= 20 * (missingPositions / all);
 
+            //sprawdza czy kwalfikacja jest special
             for (Map.Entry<String, ArrayList<String>> entry : project.getOccupiedPositions().entrySet()) {
-                String position = entry.getKey();
                 ArrayList<String> assignedStaff = entry.getValue();
                 for (String staffName : assignedStaff) {
                     Employee staff = getStaffByName(staffName);
