@@ -25,15 +25,24 @@ public class Employee {
         if (numOfQualifications == 1 && isSpecial && numOfAssignedProjects < 2) {
             numOfAssignedProjects++;
             return true;
-        } else if (!isSpecial && numOfAssignedProjects == 0) {
+        }
+
+        if (!isSpecial && numOfAssignedProjects == 0) {
             numOfAssignedProjects++;
             return true;
+        }
+
+        if (isSpecial && numOfAssignedProjects < 2) {
+            if (numOfAssignedProjects == 0) {
+                numOfAssignedProjects++;
+                return true;
+            }
         }
 
         return false;
     }
 
-    private static boolean isSpecialQualification(String qualification) {
+    public static boolean isSpecialQualification(String qualification) {
         for (SpecialQualifications q : SpecialQualifications.values()) {
             if (q.name().equals(qualification)) {
                 return true;
@@ -49,7 +58,8 @@ public class Employee {
     public ArrayList<String> getOpenQualifications() {
         return new ArrayList<>(qualifications);
     }
-    public ArrayList<String> getQualifications(){
+
+    public ArrayList<String> getQualifications() {
         return this.qualifications;
     }
 }

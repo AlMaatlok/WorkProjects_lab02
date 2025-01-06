@@ -1,6 +1,7 @@
 package Models;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Assignment {
@@ -16,7 +17,7 @@ public class Assignment {
         for (Project project : projects) {
             for (Employee staff : staffList) {
                 for (String qualification : staff.getOpenQualifications()) {
-                    if (project.isQualificationRequired(qualification)) {
+                    if (project.isQualificationRequired(qualification) && !project.isPositionOccupied(qualification)) {
                         project.occupyPosition(qualification, staff);
                     }
                 }
@@ -31,17 +32,51 @@ public class Assignment {
             int missingPositions = project.getRequiredQualifications().size();
             int all = occupiedPositions + missingPositions;
 
-            if(missingPositions == 0) score += 50;
+            if (missingPositions == 0) score += 50;
 
             score += 7 * (occupiedPositions / all);
             score -= 20 * (missingPositions / all);
 
+            for (Map.Entry<String, ArrayList<String>> entry : project.getOccupiedPositions().entrySet()) {
+                String position = entry.getKey();
+                ArrayList<String> assignedStaff = entry.getValue();
+                for (String staffName : assignedStaff) {
+                    Employee staff = getStaffByName(staffName);
+                    if (staff != null) {
+                        for (String qualification : staff.getQualifications()) {
+                            if (staff.isSpecialQualification(qualification)) {
+
+                                score += 30;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (!project.getOccupiedPositions().containsKey("QA")) {
+                score -= 40;
+            }
+            if (!project.getOccupiedPositions().containsKey("PM")) {
+                score -= 40;
+            }
         }
         return score;
     }
 
-    public void output() {
+    private Employee getStaffByName(String name) {
+        Map<String, Employee> staffMap = createStaffMap();
+        return staffMap.get(name);
+    }
 
+    private Map<String, Employee> createStaffMap() {
+        Map<String, Employee> staffMap = new HashMap<>();
+        for (Employee e : staffList) {
+            staffMap.put(e.getName(), e);
+        }
+        return staffMap;
+    }
+
+    public void output() {
         for (Project project : projects) {
             System.out.println("Project: " + project.getName());
             if (project.getOccupiedPositions().isEmpty()) {

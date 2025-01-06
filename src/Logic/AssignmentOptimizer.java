@@ -39,26 +39,30 @@ public class AssignmentOptimizer {
     public static Assignment optimizeAssignment(ArrayList<Project> projects, ArrayList<Employee> staffList) {
         Assignment bestSolution = generateNewArrangement(projects, staffList);
         int bestScore = bestSolution.calculateEfficiency();
+        int noChangeInBestScore = 0;
+        final int MAX_NO_IMPROVEMENT = 50;
+        final int MAX_ITERATIONS = 2000;
 
         for (int i = 0; i < 2000; i++) {
             Assignment newSolution = generateNewArrangement(projects, staffList);
             int newScore = newSolution.calculateEfficiency();
-            int id = i + 1;
 
-            System.out.println("Solution number " + id);
+            System.out.println("Solution number " + (i+1));
             System.out.println("Score: " + newScore);
             newSolution.output();
 
-            int noChangeInBestScore = 0;
-            if(newScore < bestScore){
-                noChangeInBestScore++;
-            }
-            else if (newScore > bestScore) {
+            if (newScore > bestScore) {
                 bestSolution = newSolution;
                 bestScore = newScore;
                 noChangeInBestScore = 0;
             }
-            if(noChangeInBestScore == 5) break;
+            else{
+                noChangeInBestScore++;
+            }
+            if (noChangeInBestScore >= MAX_NO_IMPROVEMENT) {
+                System.out.println("No improvement for " + MAX_NO_IMPROVEMENT + " consecutive iterations. Stopping early.");
+                break;
+            }
         }
 
         return bestSolution;
