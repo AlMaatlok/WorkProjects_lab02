@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AssignmentOfEmployees {
+public class EmployeeAssignment {
     private ArrayList<Project> projects;
     private ArrayList<Employee> staffList;
 
-    public AssignmentOfEmployees(ArrayList<Project> projects, ArrayList<Employee> staffList) {
+    public EmployeeAssignment(ArrayList<Project> projects, ArrayList<Employee> staffList) {
         this.projects = projects;
         this.staffList = staffList;
     }
