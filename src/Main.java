@@ -15,6 +15,9 @@ public class Main {
             System.out.println("Too many arguments");
             System.exit(-1);
         }
+        else if(args.length == 0){
+            System.out.println("No filepath given");
+        }
 
         if (args[0].equals("-h")) {
             System.out.println("Usage: java -jar main.jar <Project and staff .txt file>");
