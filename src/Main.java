@@ -1,6 +1,6 @@
 import Logic.AssignmentOptimizer;
 import Logic.FileParser;
-import Models.Assignment;
+import Models.AssignmentOfEmployees;
 import Models.Employee;
 import Models.Project;
 
@@ -31,7 +31,7 @@ public class Main {
             ArrayList<Project> projects = fm.getProjects();
 
             System.out.println("Optimizing staff assignment to projects...");
-            Assignment bestEmployment = AssignmentOptimizer.optimizeAssignment(projects, staff);
+            AssignmentOfEmployees bestEmployment = AssignmentOptimizer.optimizeAssignment(projects, staff);
 
             System.out.println("\nBest assignment:");
             bestEmployment.output();

@@ -1,6 +1,6 @@
 package Logic;
 
-import Models.Assignment;
+import Models.AssignmentOfEmployees;
 import Models.Employee;
 import Models.Project;
 
@@ -10,7 +10,7 @@ public class AssignmentOptimizer {
     public AssignmentOptimizer() {
 
     }
-    public static Assignment generateNewArrangement(ArrayList<Project> projects, ArrayList<Employee> staffList) {
+    public static AssignmentOfEmployees generateNewArrangement(ArrayList<Project> projects, ArrayList<Employee> staffList) {
 
         ArrayList<Project> copiedProjects = new ArrayList<>();
         for (Project project : projects) {
@@ -31,20 +31,20 @@ public class AssignmentOptimizer {
         ArrayList<Employee> newStaffArrangement = new ArrayList<>(copiedStaff);
         Collections.shuffle(newStaffArrangement);
 
-        Assignment newEmployment = new Assignment(newProjectArrangement, newStaffArrangement);
+        AssignmentOfEmployees newEmployment = new AssignmentOfEmployees(newProjectArrangement, newStaffArrangement);
         newEmployment.assignStaffToProjects();
         return newEmployment;
     }
 
-    public static Assignment optimizeAssignment(ArrayList<Project> projects, ArrayList<Employee> staffList) {
-        Assignment bestSolution = generateNewArrangement(projects, staffList);
+    public static AssignmentOfEmployees optimizeAssignment(ArrayList<Project> projects, ArrayList<Employee> staffList) {
+        AssignmentOfEmployees bestSolution = generateNewArrangement(projects, staffList);
         int bestScore = bestSolution.calculateEfficiency();
         int noChangeInBestScore = 0;
         final int MAX_NO_IMPROVEMENT = 50;
         final int MAX_ITERATIONS = 2000;
 
         for (int i = 0; i < 2000; i++) {
-            Assignment newSolution = generateNewArrangement(projects, staffList);
+            AssignmentOfEmployees newSolution = generateNewArrangement(projects, staffList);
             int newScore = newSolution.calculateEfficiency();
 
             System.out.println("Solution number " + (i+1));
