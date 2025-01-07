@@ -43,7 +43,7 @@ public class AssignmentOptimizer {
         final int MAX_NO_IMPROVEMENT = 50;
         final int MAX_ITERATIONS = 2000;
 
-        for (int i = 0; i < 2000; i++) {
+        for (int i = 0; i < MAX_ITERATIONS; i++) {
             EmployeeAssignment newSolution = generateNewArrangement(projects, staffList);
             int newScore = newSolution.calculateEfficiency();
 
