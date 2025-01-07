@@ -43,21 +43,6 @@ public class Project {
         return new HashMap<>(occupiedPositions);
     }
 
-    public void releasePosition(String qualification, Employee staff) {
-        if (occupiedPositions.containsKey(qualification)) {
-            ArrayList<String> staffList = occupiedPositions.get(qualification);
-            staffList.remove(staff.getName());
-            if (staffList.isEmpty()) {
-                occupiedPositions.remove(qualification);
-            }
-            requiredQualifications.add(qualification);
-        }
-    }
-
-    public boolean isEmployeeAssignedToPosition(String qualification, Employee staff) {
-        return occupiedPositions.containsKey(qualification) && occupiedPositions.get(qualification).contains(staff.getName());
-    }
-
     public boolean isPositionOccupied(String qualification) {
         return occupiedPositions.containsKey(qualification) && !occupiedPositions.get(qualification).isEmpty();
     }
